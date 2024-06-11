@@ -1,2 +1,2 @@
-client : npm run dev
-server : node index.js
+- client : npm run dev
+- server : node index.js

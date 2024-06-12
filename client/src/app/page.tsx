@@ -1,22 +1,32 @@
 'use client'
-import { Box, Button, Dialog, DialogContent, Grid, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, Grid, IconButton, Typography } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Home(){
   const route = useRouter();
   const [banks, setBanks] = useState([]);
 
-  
+  const API_BASE_URL = 'http://localhost:3001';
 
   const getTransaction = (grant_id : any) =>{
     route.push(`/transaction/${grant_id}`);
   }
 
+  const deleteBank = (grant_id : any) =>{
+    const removeGrant = async () => {
+      try {
+        const reponse = await axios.post(`${API_BASE_URL}/removeGrant/${grant_id}`);
+      } catch (error) {
+        console.error("Error creating link:", error);
+      }
+    };
+    removeGrant();
+  }
 
-
-  const API_BASE_URL = 'http://localhost:3001';
+  
 
   
 
@@ -52,9 +62,14 @@ export default function Home(){
       </Typography>
       <Box display="flex" flexDirection="column" alignItems="stretch" width="100%" maxWidth="300px" gap={2}>
         {banks.map((bank: any) => (
-          <Button onClick={()=>getTransaction(bank.grant_id)} key={bank.grant_id} variant="outlined" fullWidth>
-            {bank.grant_id}
-          </Button>
+          <Box key={bank.grant_id} display="flex" alignItems="center">
+            <Button onClick={() => getTransaction(bank.grant_id)} variant="outlined" fullWidth>
+              {bank.grant_id}
+            </Button>
+            <IconButton onClick={() => deleteBank(bank.grant_id)} color="error">
+              <DeleteIcon/>
+            </IconButton>
+          </Box>
         ))}
         <Button onClick={createLink} variant="contained" fullWidth>
           Thêm ngân hàng

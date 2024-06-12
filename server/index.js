@@ -23,6 +23,65 @@ app.get('/', (req, res)=>{
     res.send("Welcome to root URL of Server");
 });
 
+app.post('/removeGrant/:grant_id',(req, res)=>{
+  const grantId = req.params.grant_id; // Extract grant_id from request parameters
+  
+  // Query to retrieve access token based on grant_id
+  const sql = "SELECT access_token FROM accesstoken WHERE grant_id = ?";
+  
+  // Execute the SQL query
+  connect.query(sql, [grantId], function(err, result) {
+      if (err) {
+          console.error("Error retrieving access token:", err);
+          res.status(500).json({ error: "Error retrieving access token" });
+          return;
+      }
+
+      // If no rows were returned, grant_id not found
+      if (result.length === 0) {
+          res.status(404).json({ error: "Grant_id not found" });
+          return;
+      }
+
+      // Access token found, proceed with API request
+      const accessToken = result[0].access_token;
+
+      const sqlDelete = "DELETE FROM accesstoken WHERE grant_id = ?";
+      
+      // Execute the SQL delete query
+      connect.query(sqlDelete, [grantId], function(err, deleteResult) {
+          if (err) {
+              console.error("Error deleting record:", err);
+              res.status(500).json({ error: "Error deleting record" });
+              return;
+          }
+        })
+
+
+      const config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://sandbox.bankhub.dev/grant/remove',
+          headers: { 
+              'Accept': 'application/json', 
+              'x-client-id': process.env.clientId, 
+              'x-secret-key': process.env.secretKey, 
+              'Authorization': accessToken
+          }
+      };
+
+      // Make API request to fetch transactions
+      axios(config)
+          .then((response) => {
+              res.json(response.data); // Return transaction data
+          })
+          .catch((error) => {
+              console.error("Error remove grant:", error);
+              res.status(500).json({ error: "Error remove grant" });
+          });
+  });
+})
+
 app.get('/getIdentity/:grant_id',(req, res)=>{
   const grantId = req.params.grant_id; // Extract grant_id from request parameters
   

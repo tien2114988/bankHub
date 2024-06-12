@@ -70,22 +70,22 @@ const Transaction : React.FC<AccountProps> = ({transactions}) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography color="teal" variant="h5">
+                  <Typography color="teal" variant="h6">
                     Số tài khoản
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography color="teal" variant="h5">
+                  <Typography color="teal" variant="h6">
                     Số lượng
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography color="teal" variant="h5">
+                  <Typography color="teal" variant="h6">
                     Ngày giao dịch
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography color="teal" variant="h5">
+                  <Typography color="teal" variant="h6">
                     Mô tả
                   </Typography>
                 </TableCell>

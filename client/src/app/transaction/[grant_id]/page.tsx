@@ -86,17 +86,18 @@ export default function TransactionPage({ params }: { params: { grant_id: string
 
   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <Box display="flex" justifyContent="flex-end">
+    <Box sx={{ p: 2, height: "100vh"}}>
+        <Box display="flex" justifyContent="flex">
         <Button onClick={getIdentity} variant="contained" color="primary" sx={{ mr: 2 }}>Định danh</Button>
         <Button variant="contained" sx={{ mr: 2 }} onClick={getBalance}>Số dư</Button>
         <Button onClick={getTransactions} sx={{ mr: 2 }} variant="contained">Giao dịch</Button>
-        <Button onClick={()=>router.push('/')} variant="contained">Hủy</Button>
+        <Button onClick={()=>router.push('/')} variant="outlined">Hủy</Button>
       </Box>
       {option === 'identity' && <Identity account={identity} />}
       {option === 'balance' && <Balance account={balance} />}
       {option === 'transaction' && <Transaction transactions={transactions} />}
-    </main>
+    </Box>
+
   );
 }
 

@@ -55,8 +55,25 @@ export default function Home(){
     }
   };
 
+  if(banks.length === 0){
+    return (
+      <Box sx={{ p: 2, height: "100vh"}}>
+        <Typography variant="h4" gutterBottom>
+          Danh sách ngân hàng
+        </Typography>
+        <Box display="flex" flexDirection="column" alignItems="stretch" width="100%" maxWidth="300px" gap={2}>
+          Chưa có ngân hàng
+          <Button onClick={createLink} variant="contained" fullWidth>
+            Thêm ngân hàng
+          </Button>
+        </Box>
+      </Box>
+        
+    );
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <Box sx={{ p: 2, height: "100vh"}} alignItems="center">
       <Typography variant="h4" gutterBottom>
         Danh sách ngân hàng
       </Typography>
@@ -75,6 +92,7 @@ export default function Home(){
           Thêm ngân hàng
         </Button>
       </Box>
-    </main>
+    </Box>
+      
   );
 }

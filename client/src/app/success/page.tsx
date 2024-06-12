@@ -2,7 +2,7 @@
 import Balance from "@/components/Balance";
 import Identity from "@/components/Identity";
 import Transaction from "@/components/Transaction";
-import { Box, Button, Dialog, DialogContent } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, Typography } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -29,14 +29,13 @@ export default function Success() {
   },[])
 
   if(!publicToken){
-    return (
-      <></>
-    );
+    router.push('/');
   }
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      Tạo liên kết ngân hàng thành công
+      <Typography sx={{m:3}}>Tạo liên kết ngân hàng thành công</Typography>
+      
       <Button onClick={()=>router.push('/')} variant="outlined">Thoát</Button>
     </main>
   );
